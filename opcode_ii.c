@@ -42,8 +42,6 @@ void sub_handler(stack_t **stack, unsigned int line_number)
 	pop(stack, line_number);
 }
 
-void sub_handler(stack_t **stack, unsigned int line_number);
-
 /**
  * div_handler - Divides second top element by top element of the stack.
  * @stack: Pointer to the top of the stack.
