@@ -102,20 +102,26 @@ void handle_instruction(
 		push_handler(stack, arg, line_number);
 		return;
 	}
-
-	if (strcmp(opcode, "pall") == 0)
+	else if (strcmp(opcode, "pall") == 0)
 	{
 		pall_handler(stack);
 		return;
 	}
-
-	/* Find handler for other instructions in the array of function pointers */
-	for (i = 0; i < NUM_HANDLERS; i++)
+	else if (strcmp(opcode, "nop") == 0)
 	{
-		if (strcmp(opcode, handler_names[i]) == 0)
+		/* Handle nop instruction (do nothing) */
+		return;
+	}
+	else
+	{
+		/* Find handler for other instructions in array of function pointers */
+		for (i = 0; i < NUM_HANDLERS; i++)
 		{
-			handlers[i](stack, line_number);
-			return;
+			if (strcmp(opcode, handler_names[i]) == 0)
+			{
+				handlers[i](stack, line_number);
+				return;
+			}
 		}
 	}
 
@@ -123,6 +129,7 @@ void handle_instruction(
 	free_stack(stack, line_number);
 	exit(EXIT_FAILURE);
 }
+
 
 /**
  * process_file - Processes a file containing Monty bytecode instructions.
@@ -157,4 +164,5 @@ void process_file(FILE *file, unsigned int *line_number)
 	free(line);
 	free_stack(&stack, *line_number);
 }
+
 
