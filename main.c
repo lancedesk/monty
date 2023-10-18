@@ -18,7 +18,8 @@ void (*handlers[])(stack_t **stack, unsigned int line_number) = {
 	mod_handler,
 	pchar_handler,
 	pstr_handler,
-	rotl_handler
+	rotl_handler,
+	rotr_handler
 };
 
 const char *handler_names[] = {
@@ -32,7 +33,8 @@ const char *handler_names[] = {
 	"mod",
 	"pchar",
 	"pstr",
-	"rotl"
+	"rotl",
+	"rotr"
 };
 
 #define NUM_HANDLERS (sizeof(handlers) / sizeof(handlers[0]))
