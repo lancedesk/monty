@@ -67,3 +67,50 @@ void div_handler(stack_t **stack, unsigned int line_number)
 	pop(stack, line_number);
 }
 
+/**
+ * mul_handler - Multiplies the second top element of the stack
+ *                with the top element of the stack.
+ * @stack: Pointer to the top of the stack.
+ * @line_number: Current line number in the Monty bytecode file.
+ */
+
+void mul_handler(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
+		free_stack(stack, line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	(*stack)->next->n *= (*stack)->n;
+	pop_handler(stack, line_number);
+}
+
+/**
+ * mod_handler - Computes the rest of the division of the second top
+ *                element of the stack by the top element of the stack.
+ * @stack: Pointer to the top of the stack.
+ * @line_number: Current line number in the Monty bytecode file.
+ */
+
+void mod_handler(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't mod, stack too short\n", line_number);
+		free_stack(stack, line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	if ((*stack)->n == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line_number);
+		free_stack(stack, line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	(*stack)->next->n %= (*stack)->n;
+	pop_handler(stack, line_number);
+}
+

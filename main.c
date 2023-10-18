@@ -13,7 +13,9 @@ void (*handlers[])(stack_t **stack, unsigned int line_number) = {
 	swap_handler,
 	add_handler,
 	sub_handler,
-	div_handler
+	div_handler,
+	mul_handler,
+	mod_handler
 };
 
 const char *handler_names[] = {
@@ -22,7 +24,9 @@ const char *handler_names[] = {
 	"swap",
 	"add",
 	"sub",
-	"div"
+	"div",
+	"mul",
+	"mod"
 };
 
 #define NUM_HANDLERS (sizeof(handlers) / sizeof(handlers[0]))
@@ -164,5 +168,4 @@ void process_file(FILE *file, unsigned int *line_number)
 	free(line);
 	free_stack(&stack, *line_number);
 }
-
 
