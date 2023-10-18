@@ -55,3 +55,32 @@ void pstr_handler(stack_t **stack, unsigned int line_number)
 	}
 	putchar('\n');
 }
+
+/**
+ * rotl_handler - Rotates the stack to the top.
+ * @stack: A pointer to the top of the stack.
+ * @line_number: The current line number in the Monty bytecode file.
+ */
+
+void rotl_handler(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp = *stack;
+
+	if (*stack != NULL && (*stack)->next != NULL)
+	{
+		while (tmp->next != NULL)
+		{
+			tmp = tmp->next;
+		}
+
+		tmp->next = *stack;
+		(*stack)->prev = tmp;
+		tmp = *stack;
+		(*stack) = (*stack)->next;
+		(*stack)->prev = NULL;
+		tmp->next = NULL;
+	}
+
+	(void)line_number;
+}
+
