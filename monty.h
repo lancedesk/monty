@@ -38,12 +38,13 @@ typedef struct instruction_s
 /* Function Prototypes */
 void init_stack(stack_t **stack);
 void push(stack_t **stack, int value);
-int pop(stack_t **stack, unsigned int line_number);
+
 int is_empty(stack_t **stack);
 void free_stack(stack_t **stack, unsigned int line_number);
-
 void pall_handler(stack_t **stack);
 void push_handler(stack_t **stack, char *arg, unsigned int line_number);
+
+int pop(stack_t **stack, unsigned int line_number);
 void pint_handler(stack_t **stack, unsigned int line_number);
 void pop_handler(stack_t **stack, unsigned int line_number);
 void swap_handler(stack_t **stack, unsigned int line_number);
@@ -51,6 +52,20 @@ void add_handler(stack_t **stack, unsigned int line_number);
 void nop_handler(stack_t **stack, unsigned int line_number);
 void sub_handler(stack_t **stack, unsigned int line_number);
 void div_handler(stack_t **stack, unsigned int line_number);
+
+/**
+ * struct InstructionHandler - Represents an opcode
+ * and its corresponding function.
+ * @name: The opcode (instruction name) as a string.
+ * @handler: Pointer to the function that implements the opcode's behavior.
+ *
+ */
+
+typedef struct InstructionHandler
+{
+	const char *name;
+	void (*handler)(stack_t **stack, unsigned int line_number);
+} InstructionHandler;
 
 #endif /* MONTY_H */
 

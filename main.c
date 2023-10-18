@@ -6,6 +6,27 @@
 #include <string.h>
 #include "monty.h"
 
+/* Define an array of function pointers */
+void (*handlers[])(stack_t **stack, unsigned int line_number) = {
+	pint_handler,
+	pop_handler,
+	swap_handler,
+	add_handler,
+	sub_handler,
+	div_handler
+};
+
+const char *handler_names[] = {
+	"pint",
+	"pop",
+	"swap",
+	"add",
+	"sub",
+	"div"
+};
+
+#define NUM_HANDLERS (sizeof(handlers) / sizeof(handlers[0]))
+
 void handle_instruction(
 		char *opcode,
 		char *arg,
@@ -74,44 +95,33 @@ void handle_instruction(
 		unsigned int line_number
 		)
 {
+	unsigned long i;
+
 	if (strcmp(opcode, "push") == 0)
 	{
 		push_handler(stack, arg, line_number);
+		return;
 	}
-	else if (strcmp(opcode, "sub") == 0)
-	{
-		sub_handler(stack, line_number);
-	}
-	else if (strcmp(opcode, "div") == 0)
-	{
-		div_handler(stack, line_number);
-	}
-	else if (strcmp(opcode, "pall") == 0)
+
+	if (strcmp(opcode, "pall") == 0)
 	{
 		pall_handler(stack);
+		return;
 	}
-	else if (strcmp(opcode, "pint") == 0)
+
+	/* Find handler for other instructions in the array of function pointers */
+	for (i = 0; i < NUM_HANDLERS; i++)
 	{
-		pint_handler(stack, line_number);
+		if (strcmp(opcode, handler_names[i]) == 0)
+		{
+			handlers[i](stack, line_number);
+			return;
+		}
 	}
-	else if (strcmp(opcode, "pop") == 0)
-	{
-		pop_handler(stack, line_number);
-	}
-	else if (strcmp(opcode, "swap") == 0)
-	{
-		swap_handler(stack, line_number);
-	}
-	else if (strcmp(opcode, "add") == 0)
-	{
-		add_handler(stack, line_number);
-	}
-	else if (strcmp(opcode, "nop") != 0)
-	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-		free_stack(stack, line_number);
-		exit(EXIT_FAILURE);
-	}
+
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+	free_stack(stack, line_number);
+	exit(EXIT_FAILURE);
 }
 
 /**
