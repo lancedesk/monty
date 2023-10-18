@@ -6,7 +6,7 @@
 #include <string.h>
 #include "monty.h"
 
-/* Define an array of function pointers */
+/* Array of function pointers */
 void (*handlers[])(stack_t **stack, unsigned int line_number) = {
 	pint_handler,
 	pop_handler,
@@ -15,7 +15,8 @@ void (*handlers[])(stack_t **stack, unsigned int line_number) = {
 	sub_handler,
 	div_handler,
 	mul_handler,
-	mod_handler
+	mod_handler,
+	pchar_handler
 };
 
 const char *handler_names[] = {
@@ -26,7 +27,8 @@ const char *handler_names[] = {
 	"sub",
 	"div",
 	"mul",
-	"mod"
+	"mod",
+	"pchar"
 };
 
 #define NUM_HANDLERS (sizeof(handlers) / sizeof(handlers[0]))

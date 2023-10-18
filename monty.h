@@ -54,6 +54,7 @@ void sub_handler(stack_t **stack, unsigned int line_number);
 void div_handler(stack_t **stack, unsigned int line_number);
 void mul_handler(stack_t **stack, unsigned int line_number);
 void mod_handler(stack_t **stack, unsigned int line_number);
+void pchar_handler(stack_t **stack, unsigned int line_number);
 
 /**
  * struct InstructionHandler - Represents an opcode
@@ -61,12 +62,12 @@ void mod_handler(stack_t **stack, unsigned int line_number);
  * @name: The opcode (instruction name) as a string.
  * @handler: Pointer to the function that implements the opcode's behavior.
  *
- */
+*/
 
 typedef struct InstructionHandler
 {
-	const char *name;
-	void (*handler)(stack_t **stack, unsigned int line_number);
+    const char *name;
+    void (*handler)(stack_t **stack, unsigned int line_number);
 } InstructionHandler;
 
 #endif /* MONTY_H */
