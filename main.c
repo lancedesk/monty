@@ -78,6 +78,14 @@ void handle_instruction(
 	{
 		push_handler(stack, arg, line_number);
 	}
+	else if (strcmp(opcode, "sub") == 0)
+	{
+		sub_handler(stack, line_number);
+	}
+	else if (strcmp(opcode, "div") == 0)
+	{
+		div_handler(stack, line_number);
+	}
 	else if (strcmp(opcode, "pall") == 0)
 	{
 		pall_handler(stack);
@@ -139,3 +147,4 @@ void process_file(FILE *file, unsigned int *line_number)
 	free(line);
 	free_stack(&stack, *line_number);
 }
+
